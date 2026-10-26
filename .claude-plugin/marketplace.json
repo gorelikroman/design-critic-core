@@ -1,0 +1,14 @@
+{
+  "name": "design-critic-core",
+  "owner": {
+    "name": "gorelikroman"
+  },
+  "description": "A product-neutral design critic for Claude Code: review, build, spec and test modes for designers, PMs, QA and developers.",
+  "plugins": [
+    {
+      "name": "design-critic",
+      "source": "./",
+      "description": "UX/UI review, build, spec and test modes; product layers install as separate packs."
+    }
+  ]
+}

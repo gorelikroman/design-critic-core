@@ -1,0 +1,56 @@
+{
+  "title": "Checkout copy review",
+  "eyebrow": "Review · 2 screens",
+  "lead": "What to fix in the checkout copy. Decisions are made point by point right on the page.",
+  "collection": "verdicts",
+  "exportFilename": "checkout-review-verdicts.json",
+  "decisions": [
+    {
+      "key": "d1",
+      "question": "Lead under the step title: Regular or Medium?",
+      "options": ["Regular 14 / 130 %", "Medium 14 / 20"],
+      "recommended": "Regular 14 / 130 %",
+      "why": "The lead is long; Regular reads easier and doesn't compete with the title."
+    }
+  ],
+  "sections": [
+    {
+      "id": "single",
+      "title": "One version: what's wrong on the screen",
+      "nav": "Screens",
+      "screens": [
+        {
+          "id": "checkout-mobile",
+          "title": "Checkout / mobile",
+          "meta": "3360:86717",
+          "images": [{"src": "shots/checkout-mobile.png", "frame": [375, 2168]}],
+          "texts": "boxes/checkout-mobile.json",
+          "items": [
+            {"text": "Lead is set in the button style → <b>Lead</b>", "match": ["Your doctor will review"]},
+            {"text": "Section headings at the same level as payment options → <b>Subheading 18</b>", "match": ["Delivery information", "Delivery address", "Choose a payment"]},
+            {"text": "Typo in the field hint: no label, no coordinates"}
+          ],
+          "footnote": "2 texts left on kit styles."
+        }
+      ]
+    },
+    {
+      "id": "pairs",
+      "title": "Before / after",
+      "screens": [
+        {
+          "id": "plan-rp",
+          "title": "Plan / returning patient",
+          "images": [
+            {"label": "Before", "src": "shots/plan-before.png"},
+            {"label": "After", "src": "shots/plan-after.png", "pins": true, "frame": [375, 1081]}
+          ],
+          "items": [
+            {"text": "Medication name: second H1 → <b>H2 26</b>", "boxes": [[36, 389, 210, 64]]},
+            {"text": "Price: Display/Price → <b>Display/Stat 30</b>", "boxes": [[250, 395, 90, 40]]}
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "description": "Routing evals: does the skill trigger, pick the right mode, and load the product layer? Run with `python3 evals/run_routing.py` (needs the claude CLI, signed in). Review cases carry an artifact: without one the model correctly asks for it before loading the skill. See evals/README.md.",
+  "cases": [
+    { "id": "R01", "lang": "en", "role": "designer", "prompt": "Review this checkout screen before handoff: checkout.png (source: checkout.html).", "files": ["fixtures/checkout.html", "fixtures/checkout.png"], "trigger": true, "mode": "review" },
+    { "id": "R02", "lang": "en", "role": "designer", "prompt": "Review the payment mockup, it is a new feature: checkout.png, code in checkout.html.", "files": ["fixtures/checkout.html", "fixtures/checkout.png"], "trigger": true, "mode": "review" },
+    { "id": "R03", "lang": "en", "role": "designer", "prompt": "Critique the payment screen in checkout.png — what is wrong with the hierarchy?", "files": ["fixtures/checkout.png"], "trigger": true, "mode": "review" },
+    { "id": "R04", "lang": "en", "role": "designer", "prompt": "Design the subscription management screen to our rules, three directions.", "trigger": true, "mode": "build", "expect": "a brief first; directions differing on one named axis each" },
+    { "id": "R05", "lang": "en", "role": "designer", "prompt": "Design a password recovery screen for the mobile app.", "trigger": true, "mode": "build" },
+    { "id": "R06", "lang": "en", "role": "developer", "prompt": "Code a product card component in React (image, title, price, add-to-cart button) following our design rules.", "trigger": true, "mode": "build", "expect": "code medium; states as props; build note" },
+    { "id": "R07", "lang": "en", "role": "developer", "prompt": "Review the UI changes in this branch for accessibility and motion issues.", "files": ["fixtures/checkout.html"], "setup": "git-branch", "trigger": true, "mode": "review", "expect": "code input; ui_tells scan suggested or run" },
+    { "id": "R08", "lang": "en", "role": "pm", "prompt": "Write UX requirements and acceptance criteria for the 'split payment' story.", "trigger": true, "mode": "spec", "expect": "scenario model; Given/When/Then with rule IDs; no layout prescribed" },
+    { "id": "R09", "lang": "en", "role": "pm", "prompt": "Which states does the payment history screen need? Write the acceptance criteria.", "trigger": true, "mode": "spec", "expect": "state matrix with loading, empty, server_error" },
+    { "id": "R10", "lang": "en", "role": "pm", "prompt": "Is this ready for release? Payment screen: checkout.html, screenshot checkout.png.", "files": ["fixtures/checkout.html", "fixtures/checkout.png"], "trigger": true, "mode": "review", "expect": "lens 13 gates" },
+    { "id": "R11", "lang": "en", "role": "qa", "prompt": "Write UX test cases for the sign-up form on web.", "trigger": true, "mode": "test", "expect": "cases cite catalog IDs; CSV export via scripts/catalog_to_tests.py offered" },
+    { "id": "R12", "lang": "en", "role": "qa", "prompt": "Check checkout accessibility with test cases: the build is checkout.html, keyboard and screen reader.", "files": ["fixtures/checkout.html"], "trigger": true, "mode": "test", "expect": "results passed/failed/blocked/not-run; bug reports with repro" },
+    { "id": "R13", "lang": "en", "role": "designer", "prompt": "Review the payment screen in the Alpha product: checkout.png.", "files": ["fixtures/checkout.png"], "setup": "product-layer", "trigger": true, "mode": "review", "product_layer": true },
+    { "id": "R14", "lang": "en", "role": "any", "prompt": "Check the cart mockup: checkout.png.", "files": ["fixtures/checkout.png"], "trigger": true, "mode": "review", "expect": "no product named: universal rules, and the first line lists the available layers" },
+    { "id": "R15", "lang": "en", "role": "any", "prompt": "Fix the null pointer exception in the payments API client.", "trigger": false },
+    { "id": "R16", "lang": "en", "role": "any", "prompt": "Put together a dinner plan for the week.", "trigger": false },
+    { "id": "R17", "lang": "en", "role": "any", "prompt": "Answer in Spanish: review this form — checkout.html.", "files": ["fixtures/checkout.html"], "trigger": true, "mode": "review", "expect": "report in Spanish; tags, severity and rule IDs in English" },
+    { "id": "R18", "lang": "en", "role": "designer", "prompt": "Review this checkout screen against Beta's rules: checkout.png.", "files": ["fixtures/checkout.png"], "trigger": true, "mode": "review", "expect": "Beta is named but no layer matches: says so and uses universal rules" }
+  ]
+}

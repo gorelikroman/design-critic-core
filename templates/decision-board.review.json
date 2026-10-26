@@ -1,0 +1,94 @@
+// decision-board.review.json — a commented skeleton for `board/scripts/build.py`.
+// Strip the comments before use (JSON has none); a filled, runnable example without
+// comments sits at `../board/examples/review.example.json`. This file exists to show,
+// field by field, where each piece of a finding (templates/finding.md) or a card
+// (templates/screen-card.md) lands on the board.
+{
+  // The board's <title> and its h1. Keep it short and specific to this review.
+  "title": "<project> review — <slug> · <date>",
+
+  // Optional one-liner under the title, e.g. "Review · <N> screens · <date>".
+  "eyebrow": "Review · <N> screens",
+
+  // Optional short HTML paragraph: what this review covers, in one or two sentences.
+  "lead": "<HTML>",
+
+  // Where verdicts are stored. One collection per review; keep it stable across iterations
+  // so later sections write into the same store.
+  "collection": "verdicts",
+
+  // localStorage fallback key, used only when the `db` capability is unavailable.
+  "storageKey": "<slug>-review",
+
+  "exportFilename": "<slug>-verdicts.json",
+
+  // `decision-needed` observations (method §4) become decisions here, not items.
+  // One per open question; `options` are the ways the product already does it (2–4);
+  // `recommended` only if the review has a hypothesis; `why` is one sentence, the reason.
+  "decisions": [
+    {
+      "key": "d1",
+      "question": "<what the project does two ways — the exact open question>",
+      "options": ["<way A>", "<way B>"],
+      "recommended": "<way A|omit if no hypothesis>",
+      "why": "<one sentence, HTML allowed>"
+    }
+  ],
+
+  "sections": [
+    {
+      // One section per review pass; a later iteration appends a new section with a new
+      // id — never edit or renumber a section once verdicts exist against it.
+      "id": "iter1",
+      "title": "Iteration 1",
+      "screens": [
+        {
+          // Stable id, e.g. the cluster + screen slug from the screen card. Letters,
+          // digits, "_-.~:@+" only.
+          "id": "<cluster>-<screen-slug>",
+          "title": "<screen card § location>",
+          "meta": "<node id / route / file:line>",
+
+          // One image is enough (screenshot from capture, method §2). For a before/after
+          // finding, add a second image and put pins:true on whichever one the pin
+          // coordinates were measured against.
+          "images": [
+            {
+              "label": "Screen",
+              "src": "shots/<key>-<slug>.png",
+              "pins": true,
+              "frame": [0, 0]  // [width, height] in image pixels, from the capture step
+            }
+          ],
+
+          // Every `debt` finding for this screen becomes one item. Group identical fixes
+          // across screens into one item with examples ("…and 4 more"), per the debt-table
+          // rule (method §6) — do not create one item per screen for the same fix.
+          "items": [
+            {
+              // The finding's Observation + Interpretation + Recommendation, one HTML
+              // sentence naming what changes and to what. Bold the after-value.
+              "text": "<one HTML sentence: what changes, to what>",
+
+              // Pin coordinates: either explicit pixel boxes …
+              "boxes": [[0, 0, 0, 0]],
+              // … or, when a text-boxes capture ran (board/scripts/figma-text-boxes.js),
+              // a case-insensitive start-of-text match against the captured layer text:
+              // "match": ["<first words of the layer>@@<StyleName, optional>"],
+
+              // Carry the rule reference from the finding, so the board's export traces
+              // back to it: "lens 03 · Contrast floors, measured on the rendered pair"
+              // or a catalog ID. Not a board field — put it in the text itself, e.g.
+              // "<b>...</b> (lens 05 · Error copy answers four questions)".
+              "_rule": "<lens N · entry name, or catalog ID — fold into the text above>",
+              "_severity": "<blocking|warning|note>"
+            }
+          ],
+
+          // Optional: context under the items, e.g. a `context`-tagged deviation's reason.
+          "footnote": "<HTML, optional>"
+        }
+      ]
+    }
+  ]
+}

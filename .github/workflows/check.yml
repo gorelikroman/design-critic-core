@@ -1,0 +1,22 @@
+name: check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  integrity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install pyyaml
+      - name: Skill integrity (frontmatter, citations, catalog IDs, files, manifests)
+        run: python3 scripts/check_skill.py
+      - name: Scripts smoke test
+        run: |
+          python3 scripts/catalog_to_tests.py --sections A,K --platform web --level REQ > /dev/null
+          python3 scripts/ui_tells.py board > /dev/null
