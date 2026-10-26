@@ -1,6 +1,6 @@
 {
   "name": "design-critic",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "UX/UI rules for designers, PMs, QA and developers: review, build, spec and test modes over one body of perception science, interaction rules and product gates. Product-neutral; product layers install as separate packs.",
   "author": {
     "name": "gorelikroman"

@@ -126,7 +126,28 @@ critic in one of two ways:
 - **The product's repository**: the layer in its `.design-critic/` folder, picked up whenever
   Claude Code works in that repository.
 
-How to create a layer and package it as a pack: `products/README.md`.
+### Connect your product
+
+In Claude Code, with the critic installed:
+
+```
+/design-critic:new-product Alpha
+```
+
+or just ask: "connect our product Alpha to the critic". The critic asks for the product's
+names, owners, design library link, token source and 10–20 shipped screens, scaffolds a pack,
+fills the layer from those sources and a learn-mode review of the screens, and hands it to the
+product owner with the commands to publish and install it (`method/product-method.md`). No
+special design-system format is needed: the layer points to the library, tokens and components
+where they already live.
+
+Without Claude, the scaffold alone:
+
+```bash
+python3 scripts/new_pack.py ../my-product-packs --product "Alpha" --names "Alpha, Alpha app" --owner "Design team"
+```
+
+The layer's format and how packs load: `products/README.md`.
 
 Switching between products: name the product in the request ("review the settings screen in
 Alpha"), matched against the `Names` line of each `product.md`; in a product repository its
@@ -141,13 +162,14 @@ rules only".
 | `SKILL.md` | Entry point: modes, roles, language, product layers, routing, severity, precedence |
 | `method/review-method.md` · `build-method.md` · `spec-method.md` · `test-method.md` | The four procedures |
 | `method/language.md` | Output language rule: what is translated, what stays English |
+| `method/product-method.md` · `commands/new-product.md` | Connecting a product: inputs, pack scaffold, learn mode, hand-over |
 | `foundations/perception-and-cognition.md` | The WHY: 72+ mechanisms with evidence levels, myths, glossary |
 | `lenses/01…14-*.md` | The rules: about 410 entries in one format (Rule / Why / Check / Severity / Tells) |
 | `catalog/rules-catalog.md` | 266 testable rules by ID for handoff gates and test cases |
 | `templates/` | Screen card, finding, report, decisions log, design brief, build note, UX spec, test plan, bug report, CLAUDE.md snippet |
 | `products/` | How product layers and packs work, and a blank layer |
 | `board/` | The decision board: build script, page shell, example |
-| `scripts/` | Figma capture, catalog → test cases, UI tells scan, live layout checks on a rendered page, integrity check |
+| `scripts/` | Figma capture, catalog → test cases, UI tells scan, live layout checks on a rendered page, product pack scaffold, integrity check |
 | `evals/` | Routing evals and how to run them |
 | `pilot/README.md` | Pilot guide for the team: install, tasks per role, feedback form |
 | `.claude-plugin/` | Plugin manifest and marketplace |

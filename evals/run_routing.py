@@ -115,7 +115,7 @@ def score(case, lines):
                     denied += 1  # a read the session was not allowed to make does not count
                 else:
                     reads.append(path)
-    modes = [m for m in ("review", "build", "spec", "test")
+    modes = [m for m in ("review", "build", "spec", "test", "product")
              if any(r.endswith(f"method/{m}-method.md") for r in reads)]
     if not modes and any("/lenses/" in r for r in reads):
         # review often runs from SKILL.md's one-screen summary straight into the lenses

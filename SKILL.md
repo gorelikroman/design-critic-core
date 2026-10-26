@@ -1,6 +1,6 @@
 ---
 name: design-critic
-description: UX/UI rules for designers, PMs, QA and developers, on top of each product's own design system and decisions log. REVIEW a design file, screenshots, code or URL — "review this screen / flow / PR", "critique the design", "check the mockup", "design audit", "what's wrong with this UI", "check hierarchy / states / copy / motion", "is this ready for handoff", or a pasted Figma link, screenshots or URL. BUILD with the rules as constraints — "design a screen / flow", "make a mockup", "build this UI to our rules", "write a design brief", "rework this after feedback". SPEC for PMs — "write UX requirements / acceptance criteria", "what states does this flow need", "is this ready for release". TEST for QA — "write UX test cases", "test accessibility on staging", "file this UI bug". Works for requests in any language and answers in that language. Never edits an artifact it reviews.
+description: UX/UI rules for designers, PMs, QA and developers, on top of each product's own design system and decisions log. REVIEW a design file, screenshots, code or URL — "review this screen / flow / PR", "critique the design", "check the mockup", "design audit", "what's wrong with this UI", "check hierarchy / states / copy / motion", "is this ready for handoff", or a pasted Figma link, screenshots or URL. BUILD with the rules as constraints — "design a screen / flow", "make a mockup", "build this UI to our rules", "write a design brief", "rework this after feedback". SPEC for PMs — "write UX requirements / acceptance criteria", "what states does this flow need", "is this ready for release". TEST for QA — "write UX test cases", "test accessibility on staging", "file this UI bug". CONNECT a product — "connect our product / design system", "set up a product layer". Works for requests in any language and answers in that language. Never edits an artifact it reviews.
 ---
 
 # design-critic
@@ -71,7 +71,12 @@ the repository's layer disagree, follow the name and point out the mismatch. **S
 is active** in the first line of every deliverable ("Product: Alpha" or "Product: none —
 universal rules only"). A product layer is the project's confirmed decisions in the
 precedence order below; its hard rules are the project's hard rules (`blocking` for that
-product). How to create one: `products/README.md`.
+product). How layers load: `products/README.md`.
+
+**Connecting a new product** ("connect our product", "set up a product layer for Alpha",
+`/design-critic:new-product`) is its own procedure: `method/product-method.md` — ask for the
+inputs, scaffold a pack with `scripts/new_pack.py`, fill the layer from the sources and a
+learn-mode review of shipped screens, hand it to the owner. It writes only the new layer.
 
 ## Inputs
 
@@ -290,6 +295,7 @@ method/review-method.md                 review mode: the reproducible procedure
 method/build-method.md                  build mode: brief, constraints, composition, pre-flight
 method/spec-method.md                   spec mode: scenarios, acceptance criteria, release gates (PM)
 method/test-method.md                   test mode: cases, execution, bug reports (QA)
+method/product-method.md                connecting a product: inputs, pack scaffold, learn mode, hand-over
 method/language.md                      output language rule: what is translated, what stays English
 foundations/perception-and-cognition.md the WHY: mechanisms, evidence levels, myths, glossary
 lenses/01…14-*.md                       the WHAT: rules in one format (Rule / Why / Check / Severity / Tells / Catalog)
@@ -307,6 +313,8 @@ board/assets/template.html              the board's page shell (do not edit inli
 board/examples/review.example.json      a filled example of the review.json schema
 scripts/figma-fingerprint.js            optional read-only capture for design-file input
 scripts/catalog_to_tests.py             catalog rows → UX test cases (CSV / Markdown)
+scripts/new_pack.py                     scaffolds a product pack: marketplace, plugin, layer from the template
+commands/new-product.md                 /design-critic:new-product, the entry to the product method
 scripts/ui_tells.py                     scans UI code for line-level tells, each with its rule
 scripts/live-checks.js                  measures a rendered page: targets, clipped text, reflow, axe mapped to IDs
 scripts/check_skill.py                  integrity checks: frontmatter, citations, IDs, files, manifests
