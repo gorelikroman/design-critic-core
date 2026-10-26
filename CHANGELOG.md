@@ -3,6 +3,17 @@
 Versions follow `.claude-plugin/plugin.json`. Plugin installs stay on a version until it is
 bumped here and in the manifest.
 
+## 1.3.0 — 2026-10-26
+
+- **Connect a product** without help: `/design-critic:new-product` (or "connect our product")
+  runs the new product method (`method/product-method.md`) — ask for the inputs, scaffold a
+  pack, fill the layer from the design system's own sources and a learn-mode review of shipped
+  screens, hand it to the owner with publish and install commands. No special design-system
+  format is required.
+- `scripts/new_pack.py` scaffolds a product pack repository: marketplace, plugin, the skill
+  that carries the layer, and the layer from the template; a second run adds another product.
+- Evals: R19 (connecting a product).
+
 ## 1.2.0 — 2026-10-26
 
 - **Product-neutral core.** The skill names no product and no company. Product layers ship as

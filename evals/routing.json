@@ -18,6 +18,7 @@
     { "id": "R15", "lang": "en", "role": "any", "prompt": "Fix the null pointer exception in the payments API client.", "trigger": false },
     { "id": "R16", "lang": "en", "role": "any", "prompt": "Put together a dinner plan for the week.", "trigger": false },
     { "id": "R17", "lang": "en", "role": "any", "prompt": "Answer in Spanish: review this form — checkout.html.", "files": ["fixtures/checkout.html"], "trigger": true, "mode": "review", "expect": "report in Spanish; tags, severity and rule IDs in English" },
-    { "id": "R18", "lang": "en", "role": "designer", "prompt": "Review this checkout screen against Beta's rules: checkout.png.", "files": ["fixtures/checkout.png"], "trigger": true, "mode": "review", "expect": "Beta is named but no layer matches: says so and uses universal rules" }
+    { "id": "R18", "lang": "en", "role": "designer", "prompt": "Review this checkout screen against Beta's rules: checkout.png.", "files": ["fixtures/checkout.png"], "trigger": true, "mode": "review", "expect": "Beta is named but no layer matches: says so and uses universal rules" },
+    { "id": "R19", "lang": "en", "role": "any", "prompt": "Connect our product Gamma to the critic: we have a Figma library and a tokens package.", "trigger": true, "mode": "product", "expect": "follows the product method: asks for the inputs before writing anything" }
   ]
 }

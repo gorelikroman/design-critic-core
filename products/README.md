@@ -64,6 +64,10 @@ write them.
 
 ## Packaging a layer as a product pack
 
+The quickest way is `/design-critic:new-product` (the whole procedure, `method/product-method.md`)
+or the scaffold alone, `python3 scripts/new_pack.py <pack-repo> --product "<Name>" --names
+"<names>"`. The structure it writes:
+
 A pack is a plugin with one skill that holds the layer's files. Keep packs in a private
 repository of your own that doubles as a marketplace:
 
