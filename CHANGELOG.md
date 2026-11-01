@@ -3,6 +3,20 @@
 Versions follow `.claude-plugin/plugin.json`. Plugin installs stay on a version until it is
 bumped here and in the manifest.
 
+## 1.4.0 — 2026-11-01
+
+- **Perceptual contrast (APCA) next to WCAG 2.** Lens 03 · Contrast floors now reports the
+  APCA lightness contrast (Lc) for text beside the WCAG 2 ratio: Lc 75 body text (90 preferred),
+  Lc 60 other content text, Lc 45 above 36 px. The WCAG 2 ratio stays the blocking floor,
+  because accessibility law references it and APCA is in no adopted standard; text that passes
+  the ratio but falls below its APCA level is a warning (typically grey text on dark surfaces),
+  and a pair that fails the ratio but meets APCA stays blocking with the APCA value recorded.
+- `scripts/live-checks.js` computes both on every text pair it can resolve to a solid
+  background (`apca` warning, `apcaOnly` note); the formula matches the APCA-W3 reference
+  values. APCA's licence covers web content only, so native app screens get the ratio alone.
+- Foundations (text–background polarity) and `SOURCES.md` record what APCA models, its
+  evidence and licence.
+
 ## 1.3.0 — 2026-10-26
 
 - **Connect a product** without help: `/design-critic:new-product` (or "connect our product")
