@@ -12,6 +12,11 @@
 //             the width); default true
 // axeResults  optional result of axe.run() on the same root; its violations
 //             are mapped to catalog IDs (contrast, names, labels, alt, size)
+// apca        false to skip the perceptual contrast pass (default true): every
+//             text pair gets its APCA lightness contrast (Lc) next to the WCAG 2
+//             ratio; a pair that passes the ratio but falls below its APCA level
+//             is a warning, one that fails the ratio but meets APCA is a note.
+//             The WCAG 2 ratio stays the floor (its failures come from axe).
 //
 // Returns { url, viewport, findings[] }. Each finding carries the catalog ID,
 // the lens entry and the severity of the rule it applies, a CSS path to the
@@ -30,6 +35,8 @@
     spill:     { id: 'M-09', lens: 'lens 02 · Wrap deliberately; truncate without losing content', severity: 'warning' },
     reflow:    { id: 'L-04', lens: 'lens 10 · Structure is navigation; zoom and reflow', severity: 'blocking' },
     textHit:   { id: '—',    lens: 'lens 05 · Look once, report what visibly broke, name the owning discipline', severity: 'note' },
+    apca:      { id: 'L-01', lens: 'lens 03 · Contrast floors, measured on the rendered pair', severity: 'warning' },
+    apcaOnly:  { id: 'L-01', lens: 'lens 03 · Contrast floors, measured on the rendered pair', severity: 'note' },
     contrast:  { id: 'L-01', lens: 'lens 03 · Contrast floors, measured on the rendered pair', severity: 'blocking' },
     name:      { id: 'K-07', lens: 'lens 10 · Every control exposes name, role and state', severity: 'blocking' },
     label:     { id: 'D-02', lens: 'lens 10 · Every field has a programmatic label', severity: 'blocking' },
@@ -91,6 +98,43 @@
     return !!p && (p.innerText || '').trim().length > (el.innerText || '').trim().length + 10;
   }
 
+  // ---- Contrast: WCAG 2 ratio and APCA lightness contrast --------------------
+  // APCA-W3 0.0.98G-4g constants (Andrew Somers, W3 licence: web content only).
+  const parseColor = s => {
+    const m = /rgba?\(([^)]+)\)/.exec(s || '');
+    if (!m) return null;
+    const p = m[1].split(/[\s,/]+/).filter(Boolean).map(Number);
+    return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 };
+  };
+  const over = (top, under) => ({ r: top.r * top.a + under.r * (1 - top.a), g: top.g * top.a + under.g * (1 - top.a),
+    b: top.b * top.a + under.b * (1 - top.a), a: 1 });
+  const apcaY = c => 0.2126729 * Math.pow(c.r / 255, 2.4) + 0.7151522 * Math.pow(c.g / 255, 2.4) + 0.0721750 * Math.pow(c.b / 255, 2.4);
+  function apcaLc(text, bg) {
+    let t = apcaY(text), b = apcaY(bg);
+    if (t <= 0.022) t += Math.pow(0.022 - t, 1.414);
+    if (b <= 0.022) b += Math.pow(0.022 - b, 1.414);
+    if (Math.abs(b - t) < 0.0005) return 0;
+    if (b > t) { const s = (Math.pow(b, 0.56) - Math.pow(t, 0.57)) * 1.14; return s < 0.1 ? 0 : (s - 0.027) * 100; }
+    const s = (Math.pow(b, 0.65) - Math.pow(t, 0.62)) * 1.14; return s > -0.1 ? 0 : (s + 0.027) * 100;
+  }
+  const lin = v => { v /= 255; return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+  const relL = c => 0.2126 * lin(c.r) + 0.7152 * lin(c.g) + 0.0722 * lin(c.b);
+  function wcagRatio(a, b) { const x = relL(a), y = relL(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); }
+  // The solid colour a text box renders on; null where an image or gradient is under it.
+  function backdrop(el) {
+    const layers = [];
+    for (let e = el; e && e.nodeType === 1; e = e.parentElement) {
+      const s = getComputedStyle(e);
+      if (s.backgroundImage && s.backgroundImage !== 'none') return null;
+      const c = parseColor(s.backgroundColor);
+      if (c && c.a > 0) { layers.push(c); if (c.a >= 1) break; }
+    }
+    let base = { r: 255, g: 255, b: 255, a: 1 };
+    for (let i = layers.length - 1; i >= 0; i--) base = over(layers[i], base);
+    return base;
+  }
+  const hex = c => '#' + [c.r, c.g, c.b].map(v => Math.round(v).toString(16).padStart(2, '0')).join('').toUpperCase();
+
   window.designCriticChecks = function (opts = {}) {
     const root = opts.root || document.body;
     const findings = [];
@@ -145,6 +189,34 @@
       }
     }
 
+    // Perceptual contrast: APCA next to the WCAG 2 ratio, for each text pair.
+    if (opts.apca !== false) {
+      const seen = new Set();
+      for (const el of texty.slice(0, 800)) {
+        if (el.closest('[disabled],[aria-disabled="true"]')) continue;
+        const s = getComputedStyle(el), fg = parseColor(s.color), bg = backdrop(el);
+        if (!fg || !bg) continue;
+        const text = over(fg, bg), size = parseFloat(s.fontSize), weight = parseInt(s.fontWeight, 10) || 400;
+        const words = (el.innerText || '').trim();
+        const body = /^(P|LI|DD|BLOCKQUOTE|TD)$/.test(el.tagName) || words.length >= 80;
+        const level = size > 36 ? 45 : body ? 75 : 60;
+        const kind = size > 36 ? 'text above 36 px' : body ? 'body text' : 'other content text';
+        const large = size >= 24 || (size >= 18.66 && weight >= 700);
+        const floor = large ? 3 : 4.5;
+        const ratio = Math.floor(wcagRatio(text, bg) * 100) / 100, lc = Math.abs(apcaLc(text, bg));  // truncated, as axe reports
+        const key = `${hex(text)}|${hex(bg)}|${level}`;
+        if (seen.has(key)) continue;
+        const pair = `${hex(text)} on ${hex(bg)}, ${px(size)} px / ${weight}`;
+        if (ratio >= floor && lc < level) {
+          seen.add(key);
+          add('apca', el, `${pair}: passes WCAG 2 (${ratio.toFixed(2)} : 1) but APCA Lc ${lc.toFixed(1)} is below Lc ${level} for ${kind} — reads weaker than the ratio says`, { ratio: +ratio.toFixed(2), lc: +lc.toFixed(1) });
+        } else if (ratio < floor && lc >= level) {
+          seen.add(key);
+          add('apcaOnly', el, `${pair}: fails WCAG 2 (${ratio.toFixed(2)} : 1, the floor stays blocking) but APCA rates Lc ${lc.toFixed(1)}, above Lc ${level} for ${kind}`, { ratio: +ratio.toFixed(2), lc: +lc.toFixed(1) });
+        }
+      }
+    }
+
     // Text boxes painted on top of each other.
     const lines = texty.filter(el => !el.querySelector('*') || el.children.length === 0).slice(0, 400)
       .map(el => ({ el, r: el.getBoundingClientRect() }));
@@ -184,4 +256,6 @@
 
     return { url: location.href, viewport: { width: innerWidth, height: innerHeight }, findings };
   };
+  window.designCriticChecks.apcaLc = (text, bg) => apcaLc(parseColor(text), parseColor(bg));
+  window.designCriticChecks.wcagRatio = (a, b) => wcagRatio(parseColor(a), parseColor(b));
 })();
