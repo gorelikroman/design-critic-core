@@ -12,7 +12,7 @@
 | Status | Meaning |
 |---|---|
 | `candidate` | seen in one cluster; the project owner has not objected |
-| `confirmed` | seen on **3+ screens across 2+ clusters**, the project owner has not objected |
+| `confirmed` | seen on **3+ screens across 2+ clusters**, the project owner has not objected — or decided by the owner directly, written `confirmed (owner, <date> · <round or item>)` |
 | `decision-needed` | the product does it two ways, or counter-evidence appeared; listed under Open questions; the project owner decides |
 
 Status is editorial (is this row a rule of the project). It is not an audit result: a
@@ -20,42 +20,48 @@ Status is editorial (is this row a rule of the project). It is not an audit resu
 
 ## Promotion rule
 
-- `candidate` → `confirmed`: 3+ screens across 2+ clusters. Never from one screen, however
-  convincing.
+- `candidate` → `confirmed`: 3+ screens across 2+ clusters, or an owner answer in a decision
+  round. Never from one screen, however convincing.
 - Counter-evidence downgrades: a contradiction in a later cluster moves a row to
   `decision-needed` with the score (how many screens each way).
 - Only the project owner promotes rows into hard rules or the handbook, and only the project
   owner edits this file. Reviewers propose changes in `decisions-delta.md` inside their
   review folder.
 - A reference screen that contradicts a confirmed rule is a violation, not evidence.
+- A later owner answer replaces an earlier one; the old row moves to Superseded decisions.
+- Rows keep a stable ID (`<AREA>-<n>`, e.g. `COL-3`); hard rules, exceptions and answers cite it.
 - A confirmed row outranks a universal `warning` or `note` (a deviation from the universal
   becomes `context`, citing the row). It never outranks a universal `blocking`.
 
 ## Owner confirmations
 
-<!-- "<date> — cluster <X>: observations correct; candidates from <X> considered confirmed,
-     await other clusters." -->
+<!-- One line per review or decision round, newest last:
+     "<date> — cluster <X>: observations correct; candidates from <X> considered confirmed,
+     await other clusters."
+     "<date> — round <n> (<board or chat>, <N> items): <what was decided>; Q<a>–Q<b> answered." -->
 
 ---
 
 ## 1. `<Archetype or section>`
 
-| Decision | Why | Reference | Violations | Status |
-|---|---|---|---|---|
-| | | | | |
+| # | Decision | Why | Reference | Violations | Status |
+|---|---|---|---|---|---|
+| | | | | | |
 
 ## 2. `<Archetype or section>`
 
-| Decision | Why | Reference | Violations | Status |
-|---|---|---|---|---|
-| | | | | |
+| # | Decision | Why | Reference | Violations | Status |
+|---|---|---|---|---|---|
+| | | | | | |
 
 ---
 
 ## Open questions for the project owner
 
 <!-- One per decision-needed row: the two (or more) ways, the score, the reviewer's
-     hypothesis if any. Numbered; numbers are never reused once answered. -->
+     hypothesis if any. Numbered; numbers are never reused. An answered question stays listed,
+     struck through, with the date and the row it became:
+     "3. ~~<question>~~ — answered <date>: <answer> (<ID>)." -->
 
 1. `<question>` — A: `<way, N screens>` · B: `<way, M screens>` · hypothesis: `<…>`
 
@@ -72,6 +78,19 @@ Status is editorial (is this row a rule of the project). It is not an audit resu
 ## Hard rules (owner-promoted, blocking)
 
 <!-- Rules the project owner has promoted from confirmed rows. Reviewers treat these as
-     blocking severity: always debt, no context exception. -->
+     blocking severity: always debt, no context exception. Keep the list in step with
+     `product.md` §6, cite row IDs, and have the owner review it rule by rule; a rule the owner
+     demotes is listed below as a product warning ("the critic reports it, a human decides"). -->
 
 1.
+
+---
+
+## Superseded decisions (history — do not apply)
+
+<!-- A decision a later owner answer replaced. Kept so an old screen or an old review is read
+     correctly; never a rule. -->
+
+| Was | Replaced by | When |
+|---|---|---|
+| | | |
