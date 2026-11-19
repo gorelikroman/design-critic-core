@@ -1,4 +1,6 @@
-# design-critic
+# Roman in your Pocket
+
+*A senior design critic in your pocket.*
 
 A portable UX/UI skill for Claude Code, for designers, product managers, QA and developers.
 One body of perception science, interaction rules and product-UX gates, used in four modes:
@@ -23,18 +25,18 @@ names stay in English so results can be counted (`method/language.md`).
 As a plugin (recommended: one command for the team, updates by version):
 
 ```bash
-claude plugin marketplace add gorelikroman/design-critic-core
-claude plugin install design-critic@design-critic-core
+claude plugin marketplace add gorelikroman/roman-in-your-pocket
+claude plugin install roman-in-your-pocket@roman-in-your-pocket
 ```
 
-Inside a session the same works as `/plugin marketplace add gorelikroman/design-critic-core` and
-`/plugin install design-critic@design-critic-core`. The repository must be readable by whoever
-installs it. Updates: `claude plugin update design-critic@design-critic-core` after the version in
+Inside a session the same works as `/plugin marketplace add gorelikroman/roman-in-your-pocket` and
+`/plugin install roman-in-your-pocket@roman-in-your-pocket`. The repository must be readable by whoever
+installs it. Updates: `claude plugin update roman-in-your-pocket@roman-in-your-pocket` after the version in
 `.claude-plugin/plugin.json` is bumped.
 
 For a private repository, each person needs read access on GitHub and git credentials on
 their machine (for example `gh auth login`). Auto-update is off by default for third-party
-marketplaces: turn it on in `/plugin` → Marketplaces → design-critic-core.
+marketplaces: turn it on in `/plugin` → Marketplaces → roman-in-your-pocket.
 
 **For a whole repository's team** — commit this to the product repository's
 `.claude/settings.json`; when a teammate opens the repository in an interactive Claude Code
@@ -44,12 +46,12 @@ plugin:
 ```json
 {
   "extraKnownMarketplaces": {
-    "design-critic-core": {
-      "source": { "source": "github", "repo": "gorelikroman/design-critic-core" },
+    "roman-in-your-pocket": {
+      "source": { "source": "github", "repo": "gorelikroman/roman-in-your-pocket" },
       "autoUpdate": true
     }
   },
-  "enabledPlugins": { "design-critic@design-critic-core": true }
+  "enabledPlugins": { "roman-in-your-pocket@roman-in-your-pocket": true }
 }
 ```
 
@@ -66,15 +68,15 @@ As a plain skill: copy the folder into `~/.claude/skills/` (or a project's `.cla
 and start a new session.
 
 ```bash
-cp -R design-critic ~/.claude/skills/
+cp -R roman-in-your-pocket ~/.claude/skills/
 ```
 
 Claude reads the skill's own files (lenses, catalog, templates) while it works; if it asks for
 permission to read the skill's folder, allow it, or the run falls back to the summary in
 `SKILL.md` and says so.
 
-It triggers on plain requests (below). To call it explicitly: `/design-critic:design-critic`
-when installed as a plugin, `/design-critic` when copied as a plain skill.
+It triggers on plain requests (below). To call it explicitly: `/roman-in-your-pocket:roman-in-your-pocket`
+when installed as a plugin, `/roman-in-your-pocket` when copied as a plain skill.
 
 ## Quick start by role
 
@@ -120,10 +122,10 @@ critic in one of two ways:
 
   ```bash
   claude plugin marketplace add <your-org>/<your-product-packs>
-  claude plugin install design-critic-<product>@<your-product-packs>
+  claude plugin install roman-in-your-pocket-<product>@<your-product-packs>
   ```
 
-- **The product's repository**: the layer in its `.design-critic/` folder, picked up whenever
+- **The product's repository**: the layer in its `.roman-in-your-pocket/` folder, picked up whenever
   Claude Code works in that repository.
 
 ### Connect your product
@@ -131,7 +133,7 @@ critic in one of two ways:
 In Claude Code, with the critic installed:
 
 ```
-/design-critic:new-product Alpha
+/roman-in-your-pocket:new-product Alpha
 ```
 
 or just ask: "connect our product Alpha to the critic". The critic asks for the product's
@@ -151,7 +153,7 @@ The layer's format and how packs load: `products/README.md`.
 
 Switching between products: name the product in the request ("review the settings screen in
 Alpha"), matched against the `Names` line of each `product.md`; in a product repository its
-`.design-critic/` layer is picked up automatically; with several products and no name, the
+`.roman-in-your-pocket/` layer is picked up automatically; with several products and no name, the
 skill asks. Every deliverable starts with the active product, or "Product: none — universal
 rules only".
 

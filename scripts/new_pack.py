@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Scaffold a product pack: the plugin that carries one product's layer for design-critic.
+"""Scaffold a product pack: the plugin that carries one product's layer for Roman in your Pocket.
 
 A pack repository is a Claude Code marketplace holding one plugin per product:
 
     <repo>/.claude-plugin/marketplace.json
-    <repo>/plugins/design-critic-<slug>/.claude-plugin/plugin.json
-    <repo>/plugins/design-critic-<slug>/skills/product-layer/SKILL.md
-    <repo>/plugins/design-critic-<slug>/skills/product-layer/product.md
-    <repo>/plugins/design-critic-<slug>/skills/product-layer/design-decisions.md
+    <repo>/plugins/roman-in-your-pocket-<slug>/.claude-plugin/plugin.json
+    <repo>/plugins/roman-in-your-pocket-<slug>/skills/product-layer/SKILL.md
+    <repo>/plugins/roman-in-your-pocket-<slug>/skills/product-layer/product.md
+    <repo>/plugins/roman-in-your-pocket-<slug>/skills/product-layer/design-decisions.md
 
 The script writes the structure and the manifests, and fills in the parts of the blank layer it
 knows (name, names, owners, date). Everything else in product.md stays a placeholder for the
@@ -44,7 +44,7 @@ def write(path, text, force):
 
 
 def main():
-    ap = argparse.ArgumentParser(description="Scaffold a design-critic product pack.")
+    ap = argparse.ArgumentParser(description="Scaffold a Roman in your Pocket product pack.")
     ap.add_argument("repo", help="pack repository folder (created if missing; may already hold other packs)")
     ap.add_argument("--product", required=True, help='official product name, e.g. "Alpha"')
     ap.add_argument("--names", help="comma-separated names people use in requests (default: the product name)")
@@ -62,7 +62,7 @@ def main():
         if ":" in n or "\n" in n:
             sys.exit(f"a name cannot contain ':' or a line break: {n!r}")
     slug = args.slug or slugify(args.product)
-    plugin = f"design-critic-{slug}"
+    plugin = f"roman-in-your-pocket-{slug}"
     repo = os.path.abspath(args.repo)
     pack = os.path.join(repo, "plugins", plugin)
     layer = os.path.join(pack, "skills", "product-layer")
@@ -72,7 +72,7 @@ def main():
     write(os.path.join(pack, ".claude-plugin", "plugin.json"), json.dumps({
         "name": plugin,
         "version": "0.1.0",
-        "description": f"{args.product} product layer for design-critic: design system sources, "
+        "description": f"{args.product} product layer for Roman in your Pocket: design system sources, "
                        "patterns, voice, hard rules and the decisions log.",
         "author": {"name": args.owner},
     }, indent=2, ensure_ascii=False) + "\n", args.force)
@@ -84,25 +84,25 @@ def main():
     else:
         market = {"name": args.marketplace or slugify(os.path.basename(repo)),
                   "owner": {"name": args.owner},
-                  "description": "Product packs for design-critic: one plugin per product.",
+                  "description": "Product packs for Roman in your Pocket: one plugin per product.",
                   "plugins": []}
     market["plugins"] = [p for p in market.get("plugins", []) if p.get("name") != plugin]
     market["plugins"].append({"name": plugin, "source": f"./plugins/{plugin}",
-                              "description": f"{args.product} product layer for design-critic"})
+                              "description": f"{args.product} product layer for Roman in your Pocket"})
     os.makedirs(os.path.dirname(market_path), exist_ok=True)
     with open(market_path, "w", encoding="utf-8") as f:
         f.write(json.dumps(market, indent=2, ensure_ascii=False) + "\n")
 
-    # The skill that carries the layer. Its description is how design-critic finds the pack.
+    # The skill that carries the layer. Its description is how Roman in your Pocket finds the pack.
     write(os.path.join(layer, "SKILL.md"), f"""---
 name: product-layer
-description: {args.product} product layer for design-critic (design system, components, patterns, voice, hard rules, decisions log). Names - {", ".join(names)}. Load only when a design-critic request names {args.product}.
+description: {args.product} product layer for Roman in your Pocket (design system, components, patterns, voice, hard rules, decisions log). Names - {", ".join(names)}. Load only when a Roman in your Pocket request names {args.product}.
 ---
 
-# {args.product} — product layer for design-critic
+# {args.product} — product layer for Roman in your Pocket
 
-Data, not a procedure. design-critic reads the two files in this folder as the {args.product}
-layer (design-critic `SKILL.md` · Product layers):
+Data, not a procedure. Roman in your Pocket reads the two files in this folder as the {args.product}
+layer (Roman in your Pocket `SKILL.md` · Product layers):
 
 - `product.md` — design system sources, components, patterns, voice, hard rules
 - `design-decisions.md` — the decisions log, grown by reviews
@@ -112,7 +112,7 @@ layer (design-critic `SKILL.md` · Product layers):
     with open(os.path.join(TEMPLATE, "product.md"), encoding="utf-8") as f:
         product = f.read()
     product = product.replace("# Product layer — `<product name>`", f"# Product layer — {args.product}")
-    product = product.replace("(`products/README.md`)", "(design-critic `products/README.md`)")
+    product = product.replace("(`products/README.md`)", "(Roman in your Pocket `products/README.md`)")
     product = re.sub(r"> \*\*Names:\*\* .*?— every name people use for\n> this product in requests;",
                      "> **Names:** " + " · ".join(names) + " — every name people use for\n> this product in requests;",
                      product, flags=re.S)
@@ -130,7 +130,7 @@ layer (design-critic `SKILL.md` · Product layers):
     if not os.path.exists(readme):
         write(readme, f"""# {market["name"]}
 
-Product packs for [design-critic](https://github.com/gorelikroman/design-critic-core): each
+Product packs for [Roman in your Pocket](https://github.com/gorelikroman/roman-in-your-pocket): each
 plugin in `plugins/` carries one product's layer — its design system sources, patterns, voice,
 hard rules and decisions log. Install the critic once, then the packs of the products you
 work on:
@@ -141,8 +141,8 @@ claude plugin install <pack>@{market["name"]}
 ```
 
 Name the product in a request ("review the checkout in {args.product}") and the critic loads
-its pack. Add a product: `/design-critic:new-product` in Claude Code, or
-`python3 scripts/new_pack.py` from the design-critic repository. Update a pack: commit, bump
+its pack. Add a product: `/roman-in-your-pocket:new-product` in Claude Code, or
+`python3 scripts/new_pack.py` from the Roman in your Pocket repository. Update a pack: commit, bump
 `version` in its `plugin.json`, and teammates run `claude plugin update <pack>@{market["name"]}`.
 """, False)
 

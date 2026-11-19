@@ -15,19 +15,19 @@ The core ships no product layer. A layer lives in one of three places:
 
 | Where | Who gets it | When to use |
 |---|---|---|
-| A **product pack** — a separate plugin, `design-critic-<slug>` | whoever installs the pack | the usual way: teams install only the products they work on, and the core stays shareable |
-| The product repository's `.design-critic/` | anyone working in that repository | developers and QA inside the product's code |
+| A **product pack** — a separate plugin, `roman-in-your-pocket-<slug>` | whoever installs the pack | the usual way: teams install only the products they work on, and the core stays shareable |
+| The product repository's `.roman-in-your-pocket/` | anyone working in that repository | developers and QA inside the product's code |
 | `products/<slug>/` in a private copy of this skill | everyone with that copy | a single-product team that keeps its own fork |
 
 ## How a layer is loaded
 
 1. **By name.** The request names the product; the name is matched against the title and
    the `Names` line of every layer — installed packs (an available skill named
-   `design-critic-<slug>:product-layer`), this folder, and the working repository's
-   `.design-critic/product.md` (list every name people actually use: the official one,
+   `roman-in-your-pocket-<slug>:product-layer`), this folder, and the working repository's
+   `.roman-in-your-pocket/product.md` (list every name people actually use: the official one,
    localized ones, the repo slug).
 2. **By repository.** No name in the request, and the working repository has
-   `.design-critic/product.md` (a product repo can keep its layer there instead of in this
+   `.roman-in-your-pocket/product.md` (a product repo can keep its layer there instead of in this
    folder) → that layer. If a named product and the repository's layer disagree, the name
    wins and the mismatch is pointed out.
 3. **Otherwise** universal rules only — a product is never guessed. The first line of the
@@ -64,7 +64,7 @@ write them.
 
 ## Packaging a layer as a product pack
 
-The quickest way is `/design-critic:new-product` (the whole procedure, `method/product-method.md`)
+The quickest way is `/roman-in-your-pocket:new-product` (the whole procedure, `method/product-method.md`)
 or the scaffold alone, `python3 scripts/new_pack.py <pack-repo> --product "<Name>" --names
 "<names>"`. The structure it writes:
 
@@ -74,8 +74,8 @@ repository of your own that doubles as a marketplace:
 ```
 <your-product-packs>/
   .claude-plugin/marketplace.json            lists the packs
-  plugins/design-critic-<slug>/
-    .claude-plugin/plugin.json               name: design-critic-<slug>, version
+  plugins/roman-in-your-pocket-<slug>/
+    .claude-plugin/plugin.json               name: roman-in-your-pocket-<slug>, version
     skills/product-layer/SKILL.md            the product's names; points at the two files
     skills/product-layer/product.md          the layer (from products/_template/)
     skills/product-layer/design-decisions.md the decisions log
@@ -86,13 +86,13 @@ repository of your own that doubles as a marketplace:
 ```markdown
 ---
 name: product-layer
-description: Alpha product layer for design-critic (design system, patterns, voice, hard rules, decisions log). Names - Alpha, Alpha app, alpha-app. Load only when a design-critic request names Alpha.
+description: Alpha product layer for Roman in your Pocket (design system, patterns, voice, hard rules, decisions log). Names - Alpha, Alpha app, alpha-app. Load only when a Roman in your Pocket request names Alpha.
 ---
 
-# Alpha — product layer for design-critic
+# Alpha — product layer for Roman in your Pocket
 
-Data, not a procedure. design-critic reads `product.md` and `design-decisions.md` in this
-folder as the Alpha layer (design-critic `SKILL.md` · Product layers).
+Data, not a procedure. Roman in your Pocket reads `product.md` and `design-decisions.md` in this
+folder as the Alpha layer (Roman in your Pocket `SKILL.md` · Product layers).
 ```
 
 `.claude-plugin/marketplace.json` at the repository root:
@@ -102,8 +102,8 @@ folder as the Alpha layer (design-critic `SKILL.md` · Product layers).
   "name": "<your-product-packs>",
   "owner": { "name": "<your-team>" },
   "plugins": [
-    { "name": "design-critic-alpha", "source": "./plugins/design-critic-alpha",
-      "description": "Alpha product layer for design-critic" }
+    { "name": "roman-in-your-pocket-alpha", "source": "./plugins/roman-in-your-pocket-alpha",
+      "description": "Alpha product layer for Roman in your Pocket" }
   ]
 }
 ```
@@ -112,11 +112,11 @@ Install next to the core:
 
 ```bash
 claude plugin marketplace add <your-org>/<your-product-packs>
-claude plugin install design-critic-alpha@<your-product-packs>
+claude plugin install roman-in-your-pocket-alpha@<your-product-packs>
 ```
 
 Updating a layer is a commit to the pack and a version bump in its `plugin.json`; teammates
-run `claude plugin update design-critic-alpha@<your-product-packs>`. To give a whole product
+run `claude plugin update roman-in-your-pocket-alpha@<your-product-packs>`. To give a whole product
 repository's team the pack automatically, list the marketplace and the plugin in that
 repository's `.claude/settings.json` (`extraKnownMarketplaces`, `enabledPlugins`), as in the
 main README.

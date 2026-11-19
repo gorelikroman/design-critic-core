@@ -1,12 +1,12 @@
 {
-  "name": "design-critic-core",
+  "name": "roman-in-your-pocket",
   "owner": {
     "name": "gorelikroman"
   },
-  "description": "A product-neutral design critic for Claude Code: review, build, spec and test modes for designers, PMs, QA and developers.",
+  "description": "Roman in your Pocket — a product-neutral design critic for Claude Code: review, build, spec and test modes for designers, PMs, QA and developers.",
   "plugins": [
     {
-      "name": "design-critic",
+      "name": "roman-in-your-pocket",
       "source": "./",
       "description": "UX/UI review, build, spec and test modes; product layers install as separate packs."
     }

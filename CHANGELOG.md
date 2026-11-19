@@ -3,6 +3,17 @@
 Versions follow `.claude-plugin/plugin.json`. Plugin installs stay on a version until it is
 bumped here and in the manifest.
 
+## 2.0.0 — 2026-11-19
+
+- **Renamed: design-critic is now Roman in your Pocket.** The plugin, its marketplace and its
+  skill are `roman-in-your-pocket` (install `roman-in-your-pocket@roman-in-your-pocket` from
+  `gorelikroman/roman-in-your-pocket`); the commands are `/roman-in-your-pocket:roman-in-your-pocket`
+  and `/roman-in-your-pocket:new-product`; product packs are `roman-in-your-pocket-<product>`.
+  Breaking: reinstall under the new name. A product repository's layer folder is now
+  `.roman-in-your-pocket/`; the older `.design-critic/` is still read. `live-checks.js` exposes
+  `window.romanChecks`, with `window.designCriticChecks` kept as an alias.
+- **Called by name:** "Roman, review this" (in any language) starts the critic. Evals: R20.
+
 ## 1.4.0 — 2026-11-01
 
 - **Perceptual contrast (APCA) next to WCAG 2.** Lens 03 · Contrast floors now reports the

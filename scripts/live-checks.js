@@ -3,7 +3,7 @@
 // whole file into the page (a test runner's execute, a browser extension's
 // content script, or the DevTools console), then call
 //
-//   window.designCriticChecks({ root, touch, axeResults })
+//   window.romanChecks({ root, touch, axeResults })
 //
 // root        element to inspect (default: document.body)
 // touch       true on a touch viewport: adds the 44 px recommendation
@@ -135,7 +135,7 @@
   }
   const hex = c => '#' + [c.r, c.g, c.b].map(v => Math.round(v).toString(16).padStart(2, '0')).join('').toUpperCase();
 
-  window.designCriticChecks = function (opts = {}) {
+  window.romanChecks = function (opts = {}) {
     const root = opts.root || document.body;
     const findings = [];
     const add = (key, el, detail, extra) => findings.push(Object.assign({ check: key }, RULES[key], {
@@ -256,6 +256,7 @@
 
     return { url: location.href, viewport: { width: innerWidth, height: innerHeight }, findings };
   };
-  window.designCriticChecks.apcaLc = (text, bg) => apcaLc(parseColor(text), parseColor(bg));
-  window.designCriticChecks.wcagRatio = (a, b) => wcagRatio(parseColor(a), parseColor(b));
+  window.designCriticChecks = window.romanChecks;  // the name before 2.0.0
+  window.romanChecks.apcaLc = (text, bg) => apcaLc(parseColor(text), parseColor(bg));
+  window.romanChecks.wcagRatio = (a, b) => wcagRatio(parseColor(a), parseColor(b));
 })();

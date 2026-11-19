@@ -1,4 +1,4 @@
-# design-critic pilot — without a product layer
+# Roman in your Pocket pilot — without a product layer
 
 Goal: in one to two weeks, find out whether the skill helps in real work for designers, PMs,
 QA and developers, and what to improve before the products are connected. Participants: one
@@ -12,16 +12,16 @@ accessibility and copy are exactly what the pilot tests.
 
 ## 1. Install
 
-You need Claude Code and read access to the `gorelikroman/design-critic-core` repository on GitHub.
+You need Claude Code and read access to the `gorelikroman/roman-in-your-pocket` repository on GitHub.
 
 ```bash
-claude plugin marketplace add gorelikroman/design-critic-core
-claude plugin install design-critic@design-critic-core
+claude plugin marketplace add gorelikroman/roman-in-your-pocket
+claude plugin install roman-in-your-pocket@roman-in-your-pocket
 ```
 
-Or inside a session: `/plugin marketplace add gorelikroman/design-critic-core`, then
-`/plugin install design-critic@design-critic-core`. Start a new session afterwards. Updates:
-`claude plugin update design-critic@design-critic-core`.
+Or inside a session: `/plugin marketplace add gorelikroman/roman-in-your-pocket`, then
+`/plugin install roman-in-your-pocket@roman-in-your-pocket`. Start a new session afterwards. Updates:
+`claude plugin update roman-in-your-pocket@roman-in-your-pocket`.
 
 On first use Claude may ask for permission to read the skill's folder — allow it; otherwise
 it works from the short summary and says so in the report.
@@ -59,7 +59,7 @@ Use real tasks from the current sprint. At least three tasks per person.
 
 **QA**
 1. "Write UX test cases for <screen>, web", plus the catalog export (the plugin folder is
-   listed by `claude plugin list`; copied skills live in `~/.claude/skills/design-critic`):
+   listed by `claude plugin list`; copied skills live in `~/.claude/skills/roman-in-your-pocket`):
    `python3 <skill folder>/scripts/catalog_to_tests.py --sections A,B,D,E,K,L --platform web --level REQ -o cases.csv`
 2. "Test <screen> accessibility on staging: keyboard and screen reader" + URL.
 3. Take a bug you already found and ask "write this up with the bug report template" —

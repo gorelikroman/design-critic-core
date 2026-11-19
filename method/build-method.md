@@ -60,7 +60,7 @@ Written first, it forces the decisions the review would otherwise find missing. 
 Rules of the brief:
 
 - **Read what exists first.** The product layer (`products/<slug>/product.md` or the
-  repository's `.design-critic/product.md`: design system sources, components, patterns,
+  repository's `.roman-in-your-pocket/product.md`: design system sources, components, patterns,
   hard rules), the project's `design-decisions.md`, the neighbouring screens of the same
   section, and any references the requester gave. A spec (`templates/ux-spec.md`), when there
   is one, already answers §1 and §2. The project's confirmed rows are defaults; its `decision-needed` rows are
