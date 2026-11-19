@@ -41,6 +41,17 @@ appears in several sources, the skill keeps one entry and the strongest check.
   forgiving inputs, mobile mechanics, kiosk / POS / handheld rules, the unified approval
   gate.
 
+## Perceptual contrast
+
+- **APCA — Accessible Perceptual Contrast Algorithm** (APCA-W3 0.0.98G-4g; Andrew Somers,
+  Myndex Research). The lightness-contrast formula in `scripts/live-checks.js` is written from
+  the published constants and checked against the reference values (#888 on #FFF = Lc 63.06,
+  #FFF on #888 = Lc −68.54). Its licence (W3) permits royalty-free use for predicting colours
+  for web content only and excludes other uses (medical, clinical evaluation, human-safety and
+  others); the critic therefore uses it for web content, as an advisory second measure next to
+  the WCAG 2 ratio. The thresholds (Lc 90 / 75 / 60 / 45) are the Bronze simple mode of the
+  draft APCA Readability Criterion.
+
 ## Open-source skills (MIT licence unless stated)
 
 - emilkowalski/skills — animation and design-engineering guidance: frequency gate,

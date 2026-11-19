@@ -1,6 +1,6 @@
 # Design decisions log — `<project>`
 
-> The project's own yardstick, accrued from reviews. The `design-critic` skill carries the
+> The project's own yardstick, accrued from reviews. The `roman-in-your-pocket` skill carries the
 > universal rules (lenses 01–14 and the catalog); everything specific to this product —
 > archetypes, named components, colour and type roles, tolerated exceptions — lives here.
 > A row without a reference screen does not exist. Lifecycle: `method/review-method.md` §5.

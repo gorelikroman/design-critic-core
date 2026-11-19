@@ -3,7 +3,7 @@
 > How a team turns its product into a **product layer** the critic can use: who gives what,
 > what the critic fills itself, and how the layer ships as a **product pack**. Requests:
 > "connect our product", "set up a product layer for Alpha", "teach the critic our design
-> system", `/design-critic:new-product`. The layer format: `products/README.md`; the blank
+> system", `/roman-in-your-pocket:new-product`. The layer format: `products/README.md`; the blank
 > layer: `products/_template/`.
 
 ---
@@ -28,7 +28,7 @@ Ask once, in one message, and say which are required. Never guess a missing one.
 |---|---|---|
 | Official product name, and every name people use in requests | yes | the `Names` line, pack slug |
 | Product owner and design-system owner (people or teams) | yes | who accepts the layer |
-| Where the layer will live: a **product pack** (default), the product repository's `.design-critic/`, or a fork's `products/<slug>/` | yes | §2 |
+| Where the layer will live: a **product pack** (default), the product repository's `.roman-in-your-pocket/`, or a fork's `products/<slug>/` | yes | §2 |
 | Design library link (Figma or equivalent) | yes | §2 sources, §4 components |
 | Token source: repository path, package or design-tool variables | yes | §2 token roles |
 | Component code and docs (package, Storybook) | if they exist | §2, §4 |
@@ -42,7 +42,7 @@ Ask once, in one message, and say which are required. Never guess a missing one.
   --names "<Name>, <other names>" --owner "<owner>"`. It writes the marketplace, the plugin, the
   skill that carries the layer, and `product.md` / `design-decisions.md` from the template with
   the name, names, owners and date filled in. A second product goes into the same repository.
-- **Product repository:** copy `products/_template/` to `<repo>/.design-critic/`.
+- **Product repository:** copy `products/_template/` to `<repo>/.roman-in-your-pocket/`.
 - **Fork:** copy `products/_template/` to `products/<slug>/`.
 
 ## 3. Fill the passport
@@ -84,7 +84,7 @@ Only the owner edits the layer afterwards; reviews and builds propose rows.
 - **Pack:** commit and push the pack repository (private if the product is not public), then
   every teammate who works on the product runs
   `claude plugin marketplace add <owner>/<pack-repo>` and
-  `claude plugin install design-critic-<slug>@<marketplace>`. A product repository's team gets it
+  `claude plugin install roman-in-your-pocket-<slug>@<marketplace>`. A product repository's team gets it
   automatically from `extraKnownMarketplaces` and `enabledPlugins` in that repository's
   `.claude/settings.json`.
 - **Updates:** a commit plus a `version` bump in the pack's `plugin.json`; teammates run

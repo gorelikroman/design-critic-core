@@ -1,9 +1,9 @@
 ---
-name: design-critic
-description: UX/UI rules for designers, PMs, QA and developers, on top of each product's own design system and decisions log. REVIEW a design file, screenshots, code or URL — "review this screen / flow / PR", "critique the design", "check the mockup", "design audit", "what's wrong with this UI", "check hierarchy / states / copy / motion", "is this ready for handoff", or a pasted Figma link, screenshots or URL. BUILD with the rules as constraints — "design a screen / flow", "make a mockup", "build this UI to our rules", "write a design brief", "rework this after feedback". SPEC for PMs — "write UX requirements / acceptance criteria", "what states does this flow need", "is this ready for release". TEST for QA — "write UX test cases", "test accessibility on staging", "file this UI bug". CONNECT a product — "connect our product / design system", "set up a product layer". Works for requests in any language and answers in that language. Never edits an artifact it reviews.
+name: roman-in-your-pocket
+description: UX/UI rules for designers, PMs, QA and developers, on top of each product's own design system and decisions log. REVIEW a design file, screenshots, code or URL — "review this screen / flow / PR", "critique the design", "check the mockup", "design audit", "what's wrong with this UI", "check hierarchy / states / copy / motion", "is this ready for handoff", or a pasted Figma link, screenshots or URL. BUILD with the rules as constraints — "design a screen / flow", "make a mockup", "build this UI to our rules", "write a design brief", "rework this after feedback". SPEC for PMs — "write UX requirements / acceptance criteria", "what states does this flow need", "is this ready for release". TEST for QA — "write UX test cases", "test accessibility on staging", "file this UI bug". CONNECT a product — "connect our product / design system", "set up a product layer". Also by name — "Roman, review this". Works for requests in any language and answers in that language. Never edits an artifact it reviews.
 ---
 
-# design-critic
+# Roman in your Pocket
 
 One body of universal UX/UI knowledge — perception, hierarchy, typography, colour, states,
 copy, forms, motion, accessibility, product gates — used in four modes: to **review** an
@@ -51,14 +51,14 @@ language, because they are what gets counted. Details: `method/language.md`.
 Before any mode starts, find the product:
 
 1. **Collect the layers**: every installed product pack (an available skill named
-   `design-critic-<product>:product-layer`; its description lists the product's names, and
+   `roman-in-your-pocket-<product>:product-layer`; its description lists the product's names, and
    loading it gives the folder that holds the pack's `product.md` and `design-decisions.md`),
-   every `products/*/product.md` in this skill, and `.design-critic/product.md` in the working
-   repository if it exists. A layer's names are
+   every `products/*/product.md` in this skill, and `.roman-in-your-pocket/product.md` (or the older `.design-critic/product.md`)
+   in the working repository if it exists. A layer's names are
    its title and its `Names` line ("Alpha", "Alpha app", "alpha-app").
 2. **The request names a product** → use the layer whose names match, wherever it lives. Named
    but no layer matches → say so and use universal rules.
-3. **No name** → the repository's `.design-critic/` layer if there is one.
+3. **No name** → the repository's `.roman-in-your-pocket/` layer if there is one.
 4. **Otherwise** → universal rules only, never a guessed product: the first line says so and
    lists the available layers ("Product: none — universal rules only; available: Alpha, Beta"),
    so the requester can name one.
@@ -74,7 +74,7 @@ precedence order below; its hard rules are the project's hard rules (`blocking` 
 product). How layers load: `products/README.md`.
 
 **Connecting a new product** ("connect our product", "set up a product layer for Alpha",
-`/design-critic:new-product`) is its own procedure: `method/product-method.md` — ask for the
+`/roman-in-your-pocket:new-product`) is its own procedure: `method/product-method.md` — ask for the
 inputs, scaffold a pack with `scripts/new_pack.py`, fill the layer from the sources and a
 learn-mode review of shipped screens, hand it to the owner. It writes only the new layer.
 
@@ -314,7 +314,7 @@ board/examples/review.example.json      a filled example of the review.json sche
 scripts/figma-fingerprint.js            optional read-only capture for design-file input
 scripts/catalog_to_tests.py             catalog rows → UX test cases (CSV / Markdown)
 scripts/new_pack.py                     scaffolds a product pack: marketplace, plugin, layer from the template
-commands/new-product.md                 /design-critic:new-product, the entry to the product method
+commands/new-product.md                 /roman-in-your-pocket:new-product, the entry to the product method
 scripts/ui_tells.py                     scans UI code for line-level tells, each with its rule
 scripts/live-checks.js                  measures a rendered page: targets, clipped text, reflow, axe mapped to IDs
 scripts/check_skill.py                  integrity checks: frontmatter, citations, IDs, files, manifests

@@ -5,7 +5,7 @@
 
 Writes OUT_DIR/index.html, OUT_DIR/img/* (unless --embed) and OUT_DIR/files-map.json
 (the map to pass as `files` to the Artifact tool, with `root: OUT_DIR`).
-See the design-critic method (§6) and templates/decision-board.review.json for the data model.
+See the Roman in your Pocket method (§6) and templates/decision-board.review.json for the data model.
 """
 import argparse, base64, hashlib, html, io, json, os, re, shutil, sys
 

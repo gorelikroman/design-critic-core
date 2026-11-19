@@ -3,6 +3,31 @@
 Versions follow `.claude-plugin/plugin.json`. Plugin installs stay on a version until it is
 bumped here and in the manifest.
 
+## 2.0.0 — 2026-11-19
+
+- **Renamed: design-critic is now Roman in your Pocket.** The plugin, its marketplace and its
+  skill are `roman-in-your-pocket` (install `roman-in-your-pocket@roman-in-your-pocket` from
+  `gorelikroman/roman-in-your-pocket`); the commands are `/roman-in-your-pocket:roman-in-your-pocket`
+  and `/roman-in-your-pocket:new-product`; product packs are `roman-in-your-pocket-<product>`.
+  Breaking: reinstall under the new name. A product repository's layer folder is now
+  `.roman-in-your-pocket/`; the older `.design-critic/` is still read. `live-checks.js` exposes
+  `window.romanChecks`, with `window.designCriticChecks` kept as an alias.
+- **Called by name:** "Roman, review this" (in any language) starts the critic. Evals: R20.
+
+## 1.4.0 — 2026-11-01
+
+- **Perceptual contrast (APCA) next to WCAG 2.** Lens 03 · Contrast floors now reports the
+  APCA lightness contrast (Lc) for text beside the WCAG 2 ratio: Lc 75 body text (90 preferred),
+  Lc 60 other content text, Lc 45 above 36 px. The WCAG 2 ratio stays the blocking floor,
+  because accessibility law references it and APCA is in no adopted standard; text that passes
+  the ratio but falls below its APCA level is a warning (typically grey text on dark surfaces),
+  and a pair that fails the ratio but meets APCA stays blocking with the APCA value recorded.
+- `scripts/live-checks.js` computes both on every text pair it can resolve to a solid
+  background (`apca` warning, `apcaOnly` note); the formula matches the APCA-W3 reference
+  values. APCA's licence covers web content only, so native app screens get the ratio alone.
+- Foundations (text–background polarity) and `SOURCES.md` record what APCA models, its
+  evidence and licence.
+
 ## 1.3.0 — 2026-10-26
 
 - **Connect a product** without help: `/design-critic:new-product` (or "connect our product")

@@ -195,10 +195,10 @@ finding that leans on "7±2", "the F-pattern", "blue means trust", "8-second att
 - **Myth it corrects:** "16 px is a biological constant"; "bigger text fixes bad contrast".
 
 ### text–background polarity
-- **Claim:** Dark-on-light gives a modest, replicated advantage in acuity and proofreading (a bright background contracts the pupil, reducing aberrations and increasing depth of field), for young and old alike; light-on-dark is legitimate in dark rooms, for glare and photophobia, and for OLED power. Pure black on pure white causes halation for long paragraphs; a WCAG ratio is a floor, not a perceptual model.
-- **Evidence:** qualified for the polarity advantage and its pupil mechanism
+- **Claim:** Dark-on-light gives a modest, replicated advantage in acuity and proofreading (a bright background contracts the pupil, reducing aberrations and increasing depth of field), for young and old alike; light-on-dark is legitimate in dark rooms, for glare and photophobia, and for OLED power. Pure black on pure white causes halation for long paragraphs; a WCAG ratio is a floor, not a perceptual model. The WCAG 2 formula treats both polarities alike and overrates contrast between dark colours; APCA (a lightness-contrast model scored by polarity, size and weight) predicts readability better in those cases, but its validation comes mostly from its author's work, it is in no adopted standard, and the WCAG 3 contrast method is still undecided.
+- **Evidence:** qualified for the polarity advantage and its pupil mechanism; contested for APCA as the standard measure
 - **Design consequence:** Both themes ship but are validated separately as real reading tasks — muted, disabled, placeholder and over-image text included; a barely-passing ratio at a small size in a thin weight is a failure in practice. Drives (lens 03 · Dark mode is tuned, not inverted), (lens 02 · Thin needs more contrast), (lens 03 · Contrast floors, measured on the rendered pair).
-- **Myth it corrects:** "Dark mode reduces eye strain" and "dark themes are bad"; "WCAG pass = optimal".
+- **Myth it corrects:** "Dark mode reduces eye strain" and "dark themes are bad"; "WCAG pass = optimal"; "APCA has replaced WCAG 2 contrast".
 
 ## Colour
 
