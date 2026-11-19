@@ -27,6 +27,8 @@ Ask once, in one message, and say which are required. Never guess a missing one.
 | Input | Required | Used for |
 |---|---|---|
 | Official product name, and every name people use in requests | yes | the `Names` line, pack slug |
+| Sibling products, sites or apps with a similar name | if any | the `Not this product` line, so a request for one never loads the other |
+| An existing handbook, design-rules document or decisions file, if the product keeps one | if it exists | §0 source of truth: the layer summarises it and points to it |
 | Product owner and design-system owner (people or teams) | yes | who accepts the layer |
 | Where the layer will live: a **product pack** (default), the product repository's `.roman-in-your-pocket/`, or a fork's `products/<slug>/` | yes | §2 |
 | Design library link (Figma or equivalent) | yes | §2 sources, §4 components |
@@ -39,7 +41,7 @@ Ask once, in one message, and say which are required. Never guess a missing one.
 ## 2. Scaffold
 
 - **Product pack** (default): `python3 scripts/new_pack.py <pack-repo> --product "<Name>"
-  --names "<Name>, <other names>" --owner "<owner>"`. It writes the marketplace, the plugin, the
+  --names "<Name>, <other names>" --owner "<owner>" [--not-for "<sibling>"]`. It writes the marketplace, the plugin, the
   skill that carries the layer, and `product.md` / `design-decisions.md` from the template with
   the name, names, owners and date filled in. A second product goes into the same repository.
 - **Product repository:** copy `products/_template/` to `<repo>/.roman-in-your-pocket/`.
@@ -49,15 +51,23 @@ Ask once, in one message, and say which are required. Never guess a missing one.
 
 Work section by section in `product.md`; mark each value with its source.
 
-1. **§1 The product** and **§3 Voice and terms** — from the requester's answers.
-2. **§2 Design system sources** — the links as given. Token roles: read the token source (or
+1. **§0 Source of truth** — only when a handbook exists elsewhere: where it is, the commit or
+   date the summary was taken from, and that the handbook wins. Otherwise delete §0; the layer is
+   the handbook.
+2. **§1 The product** and **§3 Voice and terms** — from the requester's answers.
+3. **§2 Design system sources** — the links as given. Token roles: read the token source (or
    the design tool through its integration, read-only) and map roles to token names; values
    stay in the source.
-3. **§4 Components** and **§5 Patterns** — from the library and from the learn-mode review below.
-4. **§6 Hard rules** — only what the owner states as non-negotiable. A rule the critic merely
+4. **§4 Components** and **§5 Patterns** — from the library and from the learn-mode review below.
+5. **§6 Hard rules** — only what the owner states as non-negotiable. A rule the critic merely
    observed is a `candidate` row in the log, not a hard rule.
-5. **§7 Motion register** — from the product's motion if it can be observed, otherwise ask
+6. **§7 Motion register** — from the product's motion if it can be observed, otherwise ask
    (lens 09 · Name the register before the first finding).
+7. **§8 Tolerated exceptions**, **§9 Working in the design file**, **§10 Known drift and open
+   questions** — exceptions only once the owner accepts them; §9 from the team's working rules
+   (where to build, how to bind, how a change reaches handoff); §10 from what the learn-mode
+   review found decided but not yet built, and from product decisions that break a universal
+   `blocking` rule.
 
 ## 4. Learn the product from its screens
 
@@ -79,6 +89,27 @@ The layer is a proposal until the owner accepts it. Deliver, in the language of 
 
 Only the owner edits the layer afterwards; reviews and builds propose rows.
 
+### Decision rounds
+
+A layer is rarely accepted in one pass. Expect a few rounds of the owner's answers — on a
+decision board (one item per question, the options drawn side by side) or in chat. A typical
+sequence: the first proposal and its open questions → a consistency round (type, spacing,
+colour, components) → a rules round (the hard rules reviewed one by one, the remaining open
+questions). After each round:
+
+1. Log it in `design-decisions.md` · Owner confirmations: date, round, number of items, what was
+   decided.
+2. Turn each answer into a row `confirmed (owner, <date> · <item>)`. A row an answer replaces
+   moves to Superseded decisions; it is never deleted.
+3. Strike the answered questions through with the answer and the row ID; numbers are never
+   reused. New questions get the next number.
+4. Hard rules: the owner keeps or demotes each one. A demoted rule is listed under the hard rules
+   as a product warning. Keep `product.md` §6 and the log's list in step.
+5. Exceptions the owner accepts go to Tolerated exceptions with the reason, and to `product.md` §8.
+6. Refresh `product.md` §10 (drift and open questions) with today's date.
+7. Bump the pack's `version` (a minor step per round) and say in the commit what the round
+   decided.
+
 ## 6. Publish
 
 - **Pack:** commit and push the pack repository (private if the product is not public), then
@@ -89,5 +120,7 @@ Only the owner edits the layer afterwards; reviews and builds propose rows.
   `.claude/settings.json`.
 - **Updates:** a commit plus a `version` bump in the pack's `plugin.json`; teammates run
   `claude plugin update`.
+- **A summary layer** (§0 filled) goes stale when its handbook changes: re-read the handbook,
+  update the layer and the log, record the new commit or date in §0, bump the version.
 - **Check:** in a fresh session, "review <a screen> in <Name>" must open the pack and start the
   answer with "Product: <Name>".

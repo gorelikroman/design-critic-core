@@ -3,6 +3,23 @@
 Versions follow `.claude-plugin/plugin.json`. Plugin installs stay on a version until it is
 bumped here and in the manifest.
 
+## 2.1.0 — 2026-11-19
+
+What building two real product packs taught the product method:
+
+- **Layer template** (`products/_template/product.md`): a `Not this product` line for sibling
+  products with similar names; a reading order per mode; the "summary layer" first line when the
+  sources cannot be read; §0 Source of truth for a product that already keeps a handbook; radius
+  and elevation token roles; "States every flow draws"; §8 Tolerated exceptions, §9 Working in
+  the design file, §10 Known drift and open questions.
+- **Decisions log template**: rows confirmed directly by the owner, stable row IDs, answered
+  questions kept and struck through, hard rules reviewed rule by rule (demoted ones become product
+  warnings), and a Superseded decisions section.
+- **Product method** §5: decision rounds — how each round of the owner's answers updates the log,
+  the hard rules, the exceptions, §10 and the pack version; refreshing a summary layer.
+- **`scripts/new_pack.py --not-for`** writes the `Not this product` line and adds "Not for …" to
+  the pack's skill description.
+
 ## 2.0.0 — 2026-11-19
 
 - **Renamed: design-critic is now Roman in your Pocket.** The plugin, its marketplace and its

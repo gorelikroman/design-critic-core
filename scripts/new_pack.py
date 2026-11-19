@@ -49,6 +49,7 @@ def main():
     ap.add_argument("--product", required=True, help='official product name, e.g. "Alpha"')
     ap.add_argument("--names", help="comma-separated names people use in requests (default: the product name)")
     ap.add_argument("--slug", help="plugin slug (default: from the product name)")
+    ap.add_argument("--not-for", help="comma-separated sibling products with similar names that this pack is not for")
     ap.add_argument("--owner", default="<product owner>", help="product owner, a person or a team")
     ap.add_argument("--ds-owner", default="<design system owner>", help="design system owner")
     ap.add_argument("--marketplace", help="marketplace name for a new repository (default: the folder name)")
@@ -61,6 +62,11 @@ def main():
     for n in [args.product, *names]:
         if ":" in n or "\n" in n:
             sys.exit(f"a name cannot contain ':' or a line break: {n!r}")
+    not_for = [n.strip() for n in (args.not_for or "").split(",") if n.strip()]
+    for n in not_for:
+        if ":" in n or "\n" in n:
+            sys.exit(f"a name cannot contain ':' or a line break: {n!r}")
+    not_for_line = f" Not for {' or '.join(not_for)}." if not_for else ""
     slug = args.slug or slugify(args.product)
     plugin = f"roman-in-your-pocket-{slug}"
     repo = os.path.abspath(args.repo)
@@ -96,7 +102,7 @@ def main():
     # The skill that carries the layer. Its description is how Roman in your Pocket finds the pack.
     write(os.path.join(layer, "SKILL.md"), f"""---
 name: product-layer
-description: {args.product} product layer for Roman in your Pocket (design system, components, patterns, voice, hard rules, decisions log). Names - {", ".join(names)}. Load only when a Roman in your Pocket request names {args.product}.
+description: {args.product} product layer for Roman in your Pocket (design system, components, patterns, voice, hard rules, decisions log). Names - {", ".join(names)}. Load only when a Roman in your Pocket request names {args.product}.{not_for_line}
 ---
 
 # {args.product} — product layer for Roman in your Pocket
@@ -116,6 +122,13 @@ layer (Roman in your Pocket `SKILL.md` · Product layers):
     product = re.sub(r"> \*\*Names:\*\* .*?— every name people use for\n> this product in requests;",
                      "> **Names:** " + " · ".join(names) + " — every name people use for\n> this product in requests;",
                      product, flags=re.S)
+    if not_for:
+        product = re.sub(r"> \*\*Not this product:\*\*.*?nothing is confusable\.\n",
+                         "> **Not this product:** " + " · ".join(not_for) + " — a request naming one of them loads\n"
+                         "> its own layer, not this one.\n", product, flags=re.S)
+    else:
+        product = re.sub(r"> \*\*Not this product:\*\*.*?nothing is confusable\.\n", "", product, flags=re.S)
+    product = product.replace('"Product: `<name>` (summary layer', f'"Product: {args.product} (summary layer')
     product = product.replace("Product owner: `<name>` · Design system owner: `<name>` · Last updated: `<date>`",
                               f"Product owner: {args.owner} · Design system owner: {args.ds_owner} · Last updated: {today}")
     write(os.path.join(layer, "product.md"), product, args.force)
@@ -152,7 +165,7 @@ its pack. Add a product: `/roman-in-your-pocket:new-product` in Claude Code, or
               os.path.join(layer, "SKILL.md"), os.path.join(layer, "product.md"),
               os.path.join(layer, "design-decisions.md")]:
         print("  " + rel(p))
-    print(f"\nNext: fill product.md §1–§7 and the decisions log (method/product-method.md), push the "
+    print(f"\nNext: fill product.md §0–§10 and the decisions log (method/product-method.md), push the "
           f"repository, then:\n  claude plugin marketplace add <owner>/{os.path.basename(repo)}\n"
           f"  claude plugin install {plugin}@{market['name']}")
 

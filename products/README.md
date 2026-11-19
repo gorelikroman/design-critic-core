@@ -49,18 +49,23 @@ method (§4.5): breaking one is `debt` with no `context` exception.
 
 ## Creating a layer for a product
 
-1. `cp -R products/_template products/<slug>`: it holds `product.md` and an empty
-   `design-decisions.md` (the same file as `templates/design-decisions.md`).
-2. Fill `product.md` §1–§3 by hand: what the product is, the design system's sources (library
-   link, token source, component docs), the voice. Leave §4–§6 mostly empty.
+The full procedure — the inputs to ask for, the scaffold, filling the passport, learning from
+shipped screens and the owner's decision rounds — is `method/product-method.md`;
+`/roman-in-your-pocket:new-product` runs it. In short:
+
+1. Scaffold a pack with `scripts/new_pack.py` (or `cp -R products/_template <place>` for a
+   product repository's `.roman-in-your-pocket/` or a fork's `products/<slug>/`). The template
+   holds `product.md` and an empty `design-decisions.md` (the same file as
+   `templates/design-decisions.md`).
+2. Fill `product.md` §0–§3 by hand: an existing handbook if there is one, what the product is,
+   the design system's sources (library link, token source, component docs), the voice.
 3. Run a review in **learn mode** on the product's most recent, most trusted screens
    (`method/review-method.md` §0, §5 "Bootstrapping a new project"). Its decisions delta and
    component inventory become the first rows of `design-decisions.md` and §4–§5 of
-   `product.md`, once the product owner accepts them.
-4. From then on, reviews grow the log and builds use the components and patterns listed here.
-
-Only the product owner edits a product layer. Builds and reviews propose changes; they do not
-write them.
+   `product.md`; what is decided but not built goes to §10.
+4. The owner answers in rounds; each round confirms rows, supersedes old ones, answers open
+   questions and bumps the pack version.
+5. From then on, reviews grow the log and builds use the components and patterns listed here.
 
 ## Packaging a layer as a product pack
 
